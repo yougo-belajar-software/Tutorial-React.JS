@@ -4,20 +4,24 @@ import Dummy from './Dummy'
 import ListKaryawan from './ListKaryawan';
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {Karyawans:Dummy}
+    this.state = { Karyawans: Dummy, isLogin: false }
   }
 
   render() {
+    const isUserLoginC = (this.state.isLogin) ?
+      "sudahLogin" : "belumLogin";
     return (
       <div className="App">
         <div className="header">
           Daftar Karyawan
-          </div>
-          <ListKaryawan karyawans={this.state.Karyawans} />
+            </div>
+        <div className={isUserLoginC}>Status Login</div>
+        <ListKaryawan karyawans={this.state.Karyawans} />
       </div>
     );
+
   }
 
 }
