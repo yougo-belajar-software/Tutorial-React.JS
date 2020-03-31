@@ -1,21 +1,47 @@
 import React from 'react';
 import './App.css';
-import Dummy from './Dummy'
 import ListKaryawan from './ListKaryawan';
 import Input from './Input';
 import InputValue from './InputValue';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Karyawans: Dummy,
+      Karyawans: [],
       isLogin: false,
       tipe: "nama",
       nama: "",
       lamaKerja: 0,
       gender: ""
     }
+  }
+
+  componentDidMount() {
+    this._ambilData();
+  }
+
+  _tambahData = () => {
+    const url = "http://localhost:8000/karyawan";
+    const dataKaryawan = {
+      _id: 'njklnsdfg',
+      nama: 'Budi',
+      email: 'budi.batam@gmail.com',
+      lamaKerja: 18,
+      gender: 'male'
+    }
+    axios.post(url, dataKaryawan).then(
+      response => {
+        console.log(response)
+        this._ambilData();
+      }
+    )
+  }
+
+  _ambilData = () => {
+    const url = "http://localhost:8000/karyawan";
+    axios.get(url).then(response => this.setState({ Karyawans: response.data.results }))
   }
 
   _filterDataKaryawan = () => {
@@ -62,6 +88,9 @@ class App extends React.Component {
           Filter Daftar Karyawan
             </div>
         <div className={isUserLoginC}>Status Login</div>
+        <div>
+          <button onClick={this._tambahData}>Tambah Karyawan</button>
+        </div>
         <Input _simpanTipeFilter={this._simpanTipeFilter}>
         </Input>
         <InputValue
