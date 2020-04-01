@@ -1,21 +1,53 @@
 import React from 'react';
 import './App.css';
-import Dummy from './Dummy'
 import ListKaryawan from './ListKaryawan';
 import Input from './Input';
 import InputValue from './InputValue';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Karyawans: Dummy,
+      Karyawans: [],
       isLogin: false,
       tipe: "nama",
       nama: "",
       lamaKerja: 0,
       gender: ""
     }
+  }
+
+  componentDidMount() {
+    this._ambilData();
+  }
+
+  _ambilData = () => {
+    const url = "http://localhost:8000/karyawan";
+    axios.get(url).then(
+      response => this.setState({ Karyawans: response.data.results })
+    )
+  }
+
+  _deleteKaryawan = (id) => {
+    const url = `http://localhost:8000/karyawan/${id}`
+    axios.delete(url).then(
+      response => this._ambilData()
+    )
+  }
+
+  _tambahKaryawan = () => {
+    const data = {
+      _id: Math.floor(Math.random() * 1000000),
+      nama: 'Yougo',
+      email: 'yougo.batam@gmail.com',
+      gender: 'male',
+      lamaKerja: 10
+    }
+    const url = "http://localhost:8000/karyawan";
+    axios.post(url, data).then(
+      response => console.log(response)
+    )
   }
 
   _filterDataKaryawan = () => {
@@ -62,6 +94,7 @@ class App extends React.Component {
           Filter Daftar Karyawan
             </div>
         <div className={isUserLoginC}>Status Login</div>
+        <button onClick={this._tambahKaryawan}>Tambah Karyawan</button>
         <Input _simpanTipeFilter={this._simpanTipeFilter}>
         </Input>
         <InputValue
@@ -70,7 +103,9 @@ class App extends React.Component {
           _gantiLamaKerja={this._gantiLamaKerja}
           _gantiGender={this._gantiGender}
         ></InputValue>
-        <ListKaryawan karyawans={this._filterDataKaryawan()} />
+        <ListKaryawan
+          karyawans={this._filterDataKaryawan()}
+          _deleteKaryawan={this._deleteKaryawan} />
       </div>
     );
 
