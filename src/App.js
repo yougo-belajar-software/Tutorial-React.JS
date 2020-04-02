@@ -46,7 +46,7 @@ class App extends React.Component {
     }
     const url = "http://localhost:8000/karyawan";
     axios.post(url, data).then(
-      response => console.log(response)
+      response => this._ambilData()
     )
   }
 
