@@ -90,9 +90,7 @@ class App extends React.Component {
       "sudahLogin" : "belumLogin";
     return (
       <div className="App">
-        <div className="header">
-          Filter Daftar Karyawan
-            </div>
+        <div className="header">Daftar Karyawan</div>
         <div className={isUserLoginC}>Status Login</div>
         <button onClick={this._tambahKaryawan}>Tambah Karyawan</button>
         <Input _simpanTipeFilter={this._simpanTipeFilter}>
