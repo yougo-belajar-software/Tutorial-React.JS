@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 import ListKaryawan from './ListKaryawan';
-import Input from './Input';
-import InputValue from './InputValue';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -10,11 +8,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       Karyawans: [],
-      isLogin: false,
-      tipe: "nama",
-      nama: "",
-      lamaKerja: 0,
-      gender: ""
+      nama: '',
+      email: '',
+      lk: 0,
+      jk: 'male'
     }
   }
 
@@ -32,79 +29,129 @@ class App extends React.Component {
   _deleteKaryawan = (id) => {
     const url = `http://localhost:8000/karyawan/${id}`
     axios.delete(url).then(
-      response => this._ambilData()
+      () => this._ambilData()
     )
   }
 
-  _tambahKaryawan = () => {
+  _SimpanDataKaryawan = (event) => {
+    event.preventDefault();
     const data = {
+      id: this.state.id,
       _id: Math.floor(Math.random() * 1000000),
-      nama: 'Yougo',
-      email: 'yougo.batam@gmail.com',
-      gender: 'male',
-      lamaKerja: 10
+      nama: this.state.nama,
+      email: this.state.email,
+      gender: this.state.jk,
+      lamaKerja: this.state.lk
     }
-    const url = "http://localhost:8000/karyawan";
-    axios.post(url, data).then(
-      response => this._ambilData()
+
+    if (this.state.id === "") {
+      const url = "http://localhost:8000/karyawan";
+      axios.post(url, data).then(
+        response => this._ambilData()
+      )
+    } else {
+      const url = `http://localhost:8000/karyawan/${this.state.id}`;
+      axios.put(url, data).then(
+        response => this._ambilData()
+      )
+    }
+
+  }
+  _tambahKaryawan = () => {
+    this.setState({
+      id: '',
+      nama: '',
+      email: '',
+      jk: 'male',
+      lk: '0'
+    })
+  }
+
+  _editKaryawan = (id) => {
+    const url = `http://localhost:8000/karyawan/${id}`;
+    axios.get(url).then(
+      response => {
+        const data = response.data.result;
+        this.setState({
+          id: data.id,
+          nama: data.nama,
+          jk: data.gender,
+          email: data.email,
+          lk: data.lamaKerja
+        })
+      }
     )
   }
 
   _filterDataKaryawan = () => {
     const K = this.state.Karyawans;
-    if (K && K.length > 0) {
-      switch (this.state.tipe) {
-        case "nama":
-          return K.filter(
-            (karyawan) =>
-              karyawan.nama.toLowerCase().includes(this.state.nama.toLowerCase())
-          )
-        case "lamaKerja":
-          return K.filter(
-            (karyawan) => karyawan.lamaKerja >= this.state.lamaKerja
-          )
-        case "gender":
-          return K.filter(
-            (karyawan) => {
-              if (this.state.gender === "") {
-                return true;
-              } else {
-                return karyawan.gender === this.state.gender
-              }
-            }
-          )
-        default:
-          return K;
-      }
-    } else {
-      return [];
-    }
+    return K;
   }
-  _gantiNama = (value) => this.setState({ nama: value })
-  _gantiLamaKerja = (value) => this.setState({ lamaKerja: value })
-  _gantiGender = (value) => this.setState({ gender: value })
-  _simpanTipeFilter = (value) => this.setState({ tipe: value })
+
+  handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
 
   render() {
-    const isUserLoginC = (this.state.isLogin) ?
-      "sudahLogin" : "belumLogin";
     return (
       <div className="App">
         <div className="header">Daftar Karyawan</div>
-        <div className={isUserLoginC}>Status Login</div>
-        <button onClick={this._tambahKaryawan}>Tambah Karyawan</button>
-        <Input _simpanTipeFilter={this._simpanTipeFilter}>
-        </Input>
-        <InputValue
-          tipe={this.state.tipe}
-          _gantiNama={this._gantiNama}
-          _gantiLamaKerja={this._gantiLamaKerja}
-          _gantiGender={this._gantiGender}
-        ></InputValue>
+        <button onClick={this._tambahKaryawan}>Karyawan Baru</button>
+        <form onSubmit={this._SimpanDataKaryawan}>
+          <div>
+            <label>Nama : </label>
+            <input type="text"
+              name="nama"
+              value={this.state.nama}
+              onChange={this.handleInputChange}
+            ></input>
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleInputChange}
+            ></input>
+          </div>
+          <div>
+            <label>Lama Kerja:</label>
+            <input
+              type="number"
+              name="lk"
+              onChange={this.handleInputChange}
+              value={this.state.lk}
+            ></input>
+          </div>
+          <div>
+            <label>Jenis Kelamin:</label>
+            <select
+              name="jk"
+              value={this.state.jk}
+              onChange={this.handleInputChange}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div>
+            <input type="submit" name="submit" value="Simpan"></input>
+          </div>
+        </form>
         <ListKaryawan
           karyawans={this._filterDataKaryawan()}
-          _deleteKaryawan={this._deleteKaryawan} />
+          _deleteKaryawan={this._deleteKaryawan}
+          _editKaryawan={this._editKaryawan} />
+
       </div>
+
     );
 
   }

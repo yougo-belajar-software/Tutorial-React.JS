@@ -2,7 +2,7 @@ import React from 'react';
 import Male from './logo/male-solid.svg';
 import Female from './logo/female-solid.svg';
 
-const Karyawan = ({ karyawan, _deleteKaryawan }) =>
+const Karyawan = ({ karyawan, _deleteKaryawan, _editKaryawan }) =>
     (
         <li>
             <div>Nama : {karyawan.nama}</div>
@@ -16,7 +16,11 @@ const Karyawan = ({ karyawan, _deleteKaryawan }) =>
                 <button onClick={() => _deleteKaryawan(karyawan.id)}>
                     Delete Karyawan
                 </button>
+                <button onClick={() => _editKaryawan(karyawan.id)}>
+                    Edit Karyawan
+                </button>
             </div>
+
         </li>
     )
 
