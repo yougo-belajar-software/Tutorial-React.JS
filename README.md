@@ -1,20 +1,22 @@
-# tutorial-reactjs-part9
-Ini merupakan project untuk tutorial Youtube React.js Part-9 dimana belajar membuat filter data di React.js. 
+# tutorial-reactjs-part1
+Ini merupakan project untuk tutorial Youtube React.js Part-11 dimana di tutorial kali ini kita belajar Form input untuk edit data karyawan dan tambah karyawan baru
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/u38yI2W1_yA/0.jpg)](https://youtu.be/u38yI2W1_yA)
-
-
-Jangan lupa tekan tombol subscribe dan bel supaya mendapat notifikasi ketika lanjutan tutorial tersedia.
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/tfOEMU_ROo0/0.jpg)](https://youtu.be/tfOEMU_ROo0)
 
 
--website 
-React.js https://reactjs.org/
+Link: 
+-Github Project Tutorial Reactjs Part-11
+https://github.com/yougo-belajar-software/tutorial-reactjs-part11
 
--Array.prototype.filter
- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+-website React.js 
+https://reactjs.org/
+https://reactjs.org/docs/forms.html
 
--String.prototype.includes 
-https://developer.mozilla.org/en-US/search?q=String.prototype.includes
+-Website Axios
+https://github.com/axios/axios
+
+-Github Lumen-Mysql-RestAPI
+https://github.com/yougo-belajar-software/Lumen-RestAPI-Mysql-Karyawan
 
 Mic : Audio Technica AT-2035
 Recorder : Tascam DR-40X
