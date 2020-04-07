@@ -3,6 +3,8 @@ import './App.css';
 import ListKaryawan from './ListKaryawan';
 import axios from 'axios';
 
+export const myContext = React.createContext();
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -100,57 +102,63 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="header">Daftar Karyawan</div>
-        <button onClick={this._tambahKaryawan}>Karyawan Baru</button>
-        <form onSubmit={this._SimpanDataKaryawan}>
-          <div>
-            <label>Nama : </label>
-            <input type="text"
-              name="nama"
-              value={this.state.nama}
-              onChange={this.handleInputChange}
-            ></input>
-          </div>
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleInputChange}
-            ></input>
-          </div>
-          <div>
-            <label>Lama Kerja:</label>
-            <input
-              type="number"
-              name="lk"
-              onChange={this.handleInputChange}
-              value={this.state.lk}
-            ></input>
-          </div>
-          <div>
-            <label>Jenis Kelamin:</label>
-            <select
-              name="jk"
-              value={this.state.jk}
-              onChange={this.handleInputChange}
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div>
-            <input type="submit" name="submit" value="Simpan"></input>
-          </div>
-        </form>
-        <ListKaryawan
-          karyawans={this._filterDataKaryawan()}
-          _deleteKaryawan={this._deleteKaryawan}
-          _editKaryawan={this._editKaryawan} />
+      <myContext.Provider value={
+        {
+          edit: this._editKaryawan,
+          delete: this._deleteKaryawan
+        }}>
+        <div className="App">
+          <div className="header">Daftar Karyawan</div>
+          <button onClick={this._tambahKaryawan}>Karyawan Baru</button>
+          <form onSubmit={this._SimpanDataKaryawan}>
+            <div>
+              <label>Nama : </label>
+              <input type="text"
+                name="nama"
+                value={this.state.nama}
+                onChange={this.handleInputChange}
+              ></input>
+            </div>
+            <div>
+              <label>Email:</label>
+              <input
+                type="email"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleInputChange}
+              ></input>
+            </div>
+            <div>
+              <label>Lama Kerja:</label>
+              <input
+                type="number"
+                name="lk"
+                onChange={this.handleInputChange}
+                value={this.state.lk}
+              ></input>
+            </div>
+            <div>
+              <label>Jenis Kelamin:</label>
+              <select
+                name="jk"
+                value={this.state.jk}
+                onChange={this.handleInputChange}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div>
+              <input type="submit" name="submit" value="Simpan"></input>
+            </div>
+          </form>
+          <ListKaryawan
+            karyawans={this._filterDataKaryawan()}
+            _deleteKaryawan={this._deleteKaryawan}
+            _editKaryawan={this._editKaryawan} />
 
-      </div>
+        </div>
+      </myContext.Provider>
 
     );
 
