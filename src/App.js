@@ -13,7 +13,8 @@ class App extends React.Component {
       nama: '',
       email: '',
       lk: 0,
-      jk: 'male'
+      jk: 'male',
+      id:''
     }
   }
 
