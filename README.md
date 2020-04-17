@@ -1,24 +1,23 @@
-# tutorial-reactjs-part12
-Ini merupakan project untuk tutorial Youtube React.js Part-14 dimana di tutorial kali ini kita belajar React Context
+# Project Tutorial React.JS
+Ini merupakan project untuk tutorial Youtube React.js 
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/qTeKNEMt2Zs/0.jpg)](https://youtu.be/qTeKNEMt2Zs)
+## Playlist Youtube 
+[Youtube Link](https://www.youtube.com/playlist?list=PL4CA5HoqIyrqCfKyqN1dE60kmzv5Iu5QR)
 
-Video ini merupakan part-14 dari tutorial React.js
-Jangan lupa tekan tombol subscribe dan bel supaya mendapat notifikasi ketika lanjutan tutorial tersedia.
 
-Link: 
--Github Project Tutorial Reactjs Part-14
-https://github.com/yougo-belajar-software/Tutorial-React.JS/tree/14.0
-
--website React.js 
+## Link
+### website React.js 
 https://reactjs.org/
-https://reactjs.org/docs/hooks-rules.html
-https://reactjs.org/docs/hooks-reference.html
 
 
--Github Lumen-Mysql-RestAPI
+### Github Lumen-Mysql-RestAPI untuk Backend
 https://github.com/yougo-belajar-software/Lumen-RestAPI-Mysql-Karyawan
 
-Mic : Audio Technica AT-2035
-Recorder : Tascam DR-40X
-Headphone : Audio-Technica ATH-M50x Professional Monitor Headphones
+
+## My Tools
+Software : 
+[OBS Project](https://obsproject.com/)
+[Visual Studio Code](https://code.visualstudio.com/)
+Mic : [Audio Technica AT-2035](https://www.tokopedia.com/triple3music/audio-technica-at2035-at-2035-mic-condenser-microphone-condenser?src=topads)
+Recorder : [Tascam DR-40X](https://www.tokopedia.com/jakartadigital8/tascam-dr-40x-stereo-handheld-digital-audio-recorder)
+Headphone : [Audio-Technica ATH-M50x Professional Monitor Headphones](https://tokopedia.by/supriayogi/content/86295318 )
