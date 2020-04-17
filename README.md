@@ -1,19 +1,19 @@
 # tutorial-reactjs-part12
-Ini merupakan project untuk tutorial Youtube React.js Part-12 dimana di tutorial kali ini kita belajar React Context
+Ini merupakan project untuk tutorial Youtube React.js Part-14 dimana di tutorial kali ini kita belajar React Context
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/_pUzXJbsi0I/0.jpg)](https://youtu.be/_pUzXJbsi0I)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/qTeKNEMt2Zs/0.jpg)](https://youtu.be/qTeKNEMt2Zs)
 
-
-Video ini merupakan part-12 dari tutorial React.js
+Video ini merupakan part-14 dari tutorial React.js
 Jangan lupa tekan tombol subscribe dan bel supaya mendapat notifikasi ketika lanjutan tutorial tersedia.
 
 Link: 
--Github Project Tutorial Reactjs Part-12
-https://github.com/yougo-belajar-software/Tutorial-React.JS/tree/12.0
+-Github Project Tutorial Reactjs Part-14
+https://github.com/yougo-belajar-software/Tutorial-React.JS/tree/14.0
 
 -website React.js 
 https://reactjs.org/
-https://reactjs.org/docs/context.html
+https://reactjs.org/docs/hooks-rules.html
+https://reactjs.org/docs/hooks-reference.html
 
 
 -Github Lumen-Mysql-RestAPI

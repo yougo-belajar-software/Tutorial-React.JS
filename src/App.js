@@ -1,67 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import ListKaryawan from './ListKaryawan';
 import axios from 'axios';
 
 export const myContext = React.createContext();
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Karyawans: [],
-      nama: '',
-      email: '',
-      lk: 0,
-      jk: 'male',
-      id:''
-    }
-  }
+const App = () => {
+  const [Karyawans, setKaryawans] = useState([]);
+  const [formData, setFormData] = useState({
+    nama: '',
+    email: '',
+    lk: 0,
+    jk: 'male',
+    id: ''
+  })
 
-  componentDidMount() {
-    this._ambilData();
-  }
+  useEffect(() => _ambilData(), []);
 
-  _ambilData = () => {
+
+  const _ambilData = () => {
     const url = "http://localhost:8000/karyawan";
     axios.get(url).then(
-      response => this.setState({ Karyawans: response.data.results })
+      response => setKaryawans(response.data.results)
     )
   }
 
-  _deleteKaryawan = (id) => {
+  const _deleteKaryawan = (id) => {
     const url = `http://localhost:8000/karyawan/${id}`
     axios.delete(url).then(
-      () => this._ambilData()
+      () => _ambilData()
     )
   }
 
-  _SimpanDataKaryawan = (event) => {
+  const _SimpanDataKaryawan = (event) => {
     event.preventDefault();
     const data = {
-      id: this.state.id,
+      id: formData.id,
       _id: Math.floor(Math.random() * 1000000),
-      nama: this.state.nama,
-      email: this.state.email,
-      gender: this.state.jk,
-      lamaKerja: this.state.lk
+      nama: formData.nama,
+      email: formData.email,
+      gender: formData.jk,
+      lamaKerja: formData.lk
     }
 
-    if (this.state.id === "") {
+    if (formData.id === "") {
       const url = "http://localhost:8000/karyawan";
       axios.post(url, data).then(
-        response => this._ambilData()
+        () => _ambilData()
       )
     } else {
-      const url = `http://localhost:8000/karyawan/${this.state.id}`;
+      const url = `http://localhost:8000/karyawan/${formData.id}`;
       axios.put(url, data).then(
-        response => this._ambilData()
+        () => _ambilData()
       )
     }
-
   }
-  _tambahKaryawan = () => {
-    this.setState({
+
+  const _tambahKaryawan = () => {
+    setFormData({
       id: '',
       nama: '',
       email: '',
@@ -70,12 +66,12 @@ class App extends React.Component {
     })
   }
 
-  _editKaryawan = (id) => {
+  const _editKaryawan = (id) => {
     const url = `http://localhost:8000/karyawan/${id}`;
     axios.get(url).then(
       response => {
         const data = response.data.result;
-        this.setState({
+        setFormData({
           id: data.id,
           nama: data.nama,
           jk: data.gender,
@@ -86,86 +82,77 @@ class App extends React.Component {
     )
   }
 
-  _filterDataKaryawan = () => {
-    const K = this.state.Karyawans;
-    return K;
-  }
 
-  handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
 
-    this.setState({
+    setFormData({
+      ...formData,
       [name]: value
     });
   }
 
-  render() {
-    return (
-      <myContext.Provider value={
-        {
-          edit: this._editKaryawan,
-          delete: this._deleteKaryawan
-        }}>
-        <div className="App">
-          <div className="header">Daftar Karyawan</div>
-          <button onClick={this._tambahKaryawan}>Karyawan Baru</button>
-          <form onSubmit={this._SimpanDataKaryawan}>
-            <div>
-              <label>Nama : </label>
-              <input type="text"
-                name="nama"
-                value={this.state.nama}
-                onChange={this.handleInputChange}
-              ></input>
-            </div>
-            <div>
-              <label>Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleInputChange}
-              ></input>
-            </div>
-            <div>
-              <label>Lama Kerja:</label>
-              <input
-                type="number"
-                name="lk"
-                onChange={this.handleInputChange}
-                value={this.state.lk}
-              ></input>
-            </div>
-            <div>
-              <label>Jenis Kelamin:</label>
-              <select
-                name="jk"
-                value={this.state.jk}
-                onChange={this.handleInputChange}
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-            <div>
-              <input type="submit" name="submit" value="Simpan"></input>
-            </div>
-          </form>
-          <ListKaryawan
-            karyawans={this._filterDataKaryawan()}
-            _deleteKaryawan={this._deleteKaryawan}
-            _editKaryawan={this._editKaryawan} />
+  return (
+    <myContext.Provider value={
+      {
+        edit: _editKaryawan,
+        delete: _deleteKaryawan
+      }}>
+      <div className="App">
+        <div className="header">Daftar Karyawan</div>
+        <button onClick={_tambahKaryawan}>Karyawan Baru</button>
+        <form onSubmit={_SimpanDataKaryawan}>
+          <div>
+            <label>Nama : </label>
+            <input type="text"
+              name="nama"
+              value={formData.nama}
+              onChange={handleInputChange}
+            ></input>
+          </div>
+          <div>
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+            ></input>
+          </div>
+          <div>
+            <label>Lama Kerja:</label>
+            <input
+              type="number"
+              name="lk"
+              onChange={handleInputChange}
+              value={formData.lk}
+            ></input>
+          </div>
+          <div>
+            <label>Jenis Kelamin:</label>
+            <select
+              name="jk"
+              value={formData.jk}
+              onChange={handleInputChange}
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div>
+            <input type="submit" name="submit" value="Simpan"></input>
+          </div>
+        </form>
+        <ListKaryawan
+          karyawans={Karyawans}
+          _deleteKaryawan={_deleteKaryawan}
+          _editKaryawan={_editKaryawan} />
 
-        </div>
-      </myContext.Provider>
+      </div>
+    </myContext.Provider>
 
-    );
-
-  }
-
+  );
 }
-
-
 export default App;
