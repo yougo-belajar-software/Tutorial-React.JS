@@ -1,85 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import ListKaryawan from './ListKaryawan';
-import axios from 'axios';
-
+import { useKaryawan, baru } from './useKaryawan'
 export const myContext = React.createContext();
 
 const App = () => {
-  const [Karyawans, setKaryawans] = useState([]);
-  const [formData, setFormData] = useState({
-    nama: '',
-    email: '',
-    lk: 0,
-    jk: 'male',
-    id: ''
-  })
-
-  useEffect(() => _ambilData(), []);
-
-
-  const _ambilData = () => {
-    const url = "http://localhost:8000/karyawan";
-    axios.get(url).then(
-      response => setKaryawans(response.data.results)
-    )
-  }
+  const [Karyawans, SingleKaryawan, setUpdateData, setDeleteID, setSingleID, setSingleKaryawan] = useKaryawan([]);
 
   const _deleteKaryawan = (id) => {
-    const url = `http://localhost:8000/karyawan/${id}`
-    axios.delete(url).then(
-      () => _ambilData()
-    )
+    setDeleteID(id)
   }
 
   const _SimpanDataKaryawan = (event) => {
     event.preventDefault();
-    const data = {
-      id: formData.id,
-      _id: Math.floor(Math.random() * 1000000),
-      nama: formData.nama,
-      email: formData.email,
-      gender: formData.jk,
-      lamaKerja: formData.lk
-    }
-
-    if (formData.id === "") {
-      const url = "http://localhost:8000/karyawan";
-      axios.post(url, data).then(
-        () => _ambilData()
-      )
-    } else {
-      const url = `http://localhost:8000/karyawan/${formData.id}`;
-      axios.put(url, data).then(
-        () => _ambilData()
-      )
-    }
+    setUpdateData(SingleKaryawan);
   }
 
   const _tambahKaryawan = () => {
-    setFormData({
-      id: '',
-      nama: '',
-      email: '',
-      jk: 'male',
-      lk: '0'
-    })
+    setSingleKaryawan(baru)
   }
 
   const _editKaryawan = (id) => {
-    const url = `http://localhost:8000/karyawan/${id}`;
-    axios.get(url).then(
-      response => {
-        const data = response.data.result;
-        setFormData({
-          id: data.id,
-          nama: data.nama,
-          jk: data.gender,
-          email: data.email,
-          lk: data.lamaKerja
-        })
-      }
-    )
+    setSingleID(id)
   }
 
 
@@ -88,8 +30,8 @@ const App = () => {
     const value = target.value;
     const name = target.name;
 
-    setFormData({
-      ...formData,
+    setSingleKaryawan({
+      ...SingleKaryawan,
       [name]: value
     });
   }
@@ -108,7 +50,7 @@ const App = () => {
             <label>Nama : </label>
             <input type="text"
               name="nama"
-              value={formData.nama}
+              value={SingleKaryawan.nama}
               onChange={handleInputChange}
             ></input>
           </div>
@@ -117,7 +59,7 @@ const App = () => {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={SingleKaryawan.email}
               onChange={handleInputChange}
             ></input>
           </div>
@@ -125,16 +67,16 @@ const App = () => {
             <label>Lama Kerja:</label>
             <input
               type="number"
-              name="lk"
+              name="lamaKerja"
               onChange={handleInputChange}
-              value={formData.lk}
+              value={SingleKaryawan.lamaKerja}
             ></input>
           </div>
           <div>
             <label>Jenis Kelamin:</label>
             <select
-              name="jk"
-              value={formData.jk}
+              name="gender"
+              value={SingleKaryawan.gender}
               onChange={handleInputChange}
             >
               <option value="male">Male</option>
@@ -146,10 +88,7 @@ const App = () => {
           </div>
         </form>
         <ListKaryawan
-          karyawans={Karyawans}
-          _deleteKaryawan={_deleteKaryawan}
-          _editKaryawan={_editKaryawan} />
-
+          karyawans={Karyawans} />
       </div>
     </myContext.Provider>
 
