@@ -1,30 +1,43 @@
-import React from 'react';
-import ListKaryawan from './ListKaryawan';
+import React from 'react'
+import ListKaryawan from './ListKaryawan'
 import { useKaryawan } from './useKaryawan'
-export const myContext = React.createContext();
+import Karyawan from './Karyawan'
 
 const Admin = () => {
     const [Karyawans] = useKaryawan([]);
 
-    const _deleteKaryawan = (id) => {
-    }
+    const style = {color:'gray'}
 
-    const _editKaryawan = (id) => {
-    }
+    const _tampilkanGaji = (props) => alert(`Hello, ${props}`)
+    
+    const AnakKaryawan = (nama) => (
+        <React.Fragment>
+            <button onClick={() => _tampilkanGaji(nama)}>
+                Tampilkan Gaji
+            </button>
+        </React.Fragment>
+
+    )
+    const AnakKomponent = (
+        <React.Fragment>
+            {Karyawans.map((Satukaryawan) =>
+                <Karyawan
+                    key={Satukaryawan._id}
+                    karyawan={Satukaryawan}
+                    AnakKaryawan={AnakKaryawan(Satukaryawan.nama)}
+                    style={style}
+                />
+            )}
+        </React.Fragment>
+    )
 
     return (
-        <myContext.Provider value={
-            {
-                edit: _editKaryawan,
-                delete: _deleteKaryawan
-            }}>
-            <div className="App">
-                <div className="header">Admin Page</div>
-                <ListKaryawan
-                    karyawans={Karyawans} />
-            </div>
-        </myContext.Provider>
-
+        <div className="App">
+            <h2>Admin Page</h2>
+            <ListKaryawan
+                AnakKomponent={AnakKomponent}
+            />
+        </div>
     );
 }
 export default Admin;

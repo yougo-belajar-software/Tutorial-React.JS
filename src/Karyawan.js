@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import Male from './logo/male-solid.svg';
 import Female from './logo/female-solid.svg';
-import { myContext } from './App';
 
-const Karyawan = ({ karyawan }) => {
-    const context = useContext(myContext);
+const Karyawan = ({ karyawan, AnakKaryawan, style }) => {
     return (
-        <li>
+        <li style={style}>
             <div>Nama : {karyawan.nama}</div>
             <div>Email: {karyawan.email}</div>
             <div>lamaKerja : {karyawan.lamaKerja}</div>
@@ -15,12 +13,7 @@ const Karyawan = ({ karyawan }) => {
                 <img src={(karyawan.gender === "male" ? Male : Female)} width='20px' alt={karyawan.nama} />
             </div>
             <div>
-                <button onClick={() => context.delete(karyawan.id)}>
-                    Delete Karyawan
-                </button>
-                <button onClick={() => context.edit(karyawan.id)}>
-                    Edit Karyawan
-                </button>
+                {AnakKaryawan}
             </div>
         </li>
     )

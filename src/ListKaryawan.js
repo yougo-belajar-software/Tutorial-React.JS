@@ -1,15 +1,9 @@
 import React from 'react';
-import Karyawan from './Karyawan';
 
-const ListKaryawan = ({ karyawans }) =>
+const ListKaryawan = ({ AnakKomponent }) =>
     (
         <ul>
-            {karyawans.map((Satukaryawan) =>
-                <Karyawan
-                    key={Satukaryawan._id}
-                    karyawan={Satukaryawan}
-                />
-            )}
+            {AnakKomponent}
         </ul>
     )
 
