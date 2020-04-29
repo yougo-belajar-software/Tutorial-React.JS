@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Male from './logo/male-solid.svg';
 import Female from './logo/female-solid.svg';
 
