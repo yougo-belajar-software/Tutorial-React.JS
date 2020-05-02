@@ -19,4 +19,4 @@ const Karyawan = ({ karyawan, AnakKaryawan, style }) => {
     )
 }
 
-export default Karyawan;
+export default React.memo(Karyawan);

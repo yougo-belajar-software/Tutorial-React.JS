@@ -40,7 +40,11 @@ export const useKaryawan = () => {
             response => setKaryawans(response.data.results)
         )
     }, [Counter])
-
+    const reset = () => {
+        setCounter(c => c + 1);
+        setSingleID(null);
+        setSingleKaryawan(baru);
+    }
     //Trigger Update & Baru simpan ke Backend
     useEffect(() => {
         if (UpdateData !== null) {
@@ -48,12 +52,12 @@ export const useKaryawan = () => {
             if (data.id === "") {
                 const url = MainURL
                 Axios.post(url, data).then(
-                    () => setCounter(c => c + 1)
+                    () => reset()
                 )
             } else {
                 const url = `${MainURL}/${data.id}`;
                 Axios.put(url, data).then(
-                    () => setCounter(c => c + 1)
+                    () => reset()
                 )
             }
         }
@@ -64,7 +68,7 @@ export const useKaryawan = () => {
         if (DeleteID !== null) {
             const url = `${MainURL}/${DeleteID}`
             Axios.delete(url).then(
-                () => setCounter(c => c + 1)
+                () => reset()
             )
         }
     }, [DeleteID])

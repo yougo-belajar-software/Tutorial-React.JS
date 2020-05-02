@@ -3,27 +3,23 @@ import './App.css';
 import ListKaryawan from './ListKaryawan';
 import Karyawan from './Karyawan';
 import { useKaryawan, baru } from './useKaryawan'
+import Form from './Form';
+
+const AnakKomponent = ({ Karyawans, AnakKaryawan }) => (
+  <React.Fragment>
+    {Karyawans.map((Satukaryawan) =>
+      <Karyawan
+        key={Satukaryawan._id}
+        karyawan={Satukaryawan}
+        AnakKaryawan={AnakKaryawan(Satukaryawan.id)}
+        style={{ color: 'blue', fontSize: '11px' }}
+      />
+    )}
+  </React.Fragment>
+)
 
 const App = () => {
   const [Karyawans, SingleKaryawan, setUpdateData, setDeleteID, setSingleID, setSingleKaryawan] = useKaryawan([]);
-
-  const _deleteKaryawan = (id) => {
-    setDeleteID(id)
-  }
-
-  const _SimpanDataKaryawan = (event) => {
-    event.preventDefault();
-    setUpdateData(SingleKaryawan);
-  }
-
-  const _tambahKaryawan = () => {
-    setSingleKaryawan(baru)
-  }
-
-  const _editKaryawan = (id) => {
-    setSingleID(id)
-  }
-
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -36,74 +32,35 @@ const App = () => {
     });
   }
 
-  const AnakKaryawan = (id) => (
+  const AnakKaryawan = React.useMemo(() => (id) => (
     <React.Fragment>
-      <button onClick={() => _deleteKaryawan(id)}>Delete Karyawan</button>
-      <button onClick={() => _editKaryawan(id)}>Edit Karyawan</button>
+      <button onClick={() => setDeleteID(id)}>Delete Karyawan</button>
+      <button onClick={() => setSingleID(id)}>Edit Karyawan</button>
     </React.Fragment>
+  ), [setDeleteID, setSingleID])
 
-  )
-  const AnakKomponent = (
-    <React.Fragment>
-      {Karyawans.map((Satukaryawan) =>
-        <Karyawan
-          key={Satukaryawan._id}
-          karyawan={Satukaryawan}
-          AnakKaryawan={AnakKaryawan(Satukaryawan.id)}
-          style={{color:'blue',fontSize:'11px'}}
-        />
-      )}
-    </React.Fragment>
-  )
-  
   return (
     <div className="App">
       <div className="header">Daftar Karyawan</div>
-      <button onClick={_tambahKaryawan}>Karyawan Baru</button>
-      <form onSubmit={_SimpanDataKaryawan}>
-        <div>
-          <label>Nama : </label>
-          <input type="text"
-            name="nama"
-            value={SingleKaryawan.nama}
-            onChange={handleInputChange}
-          ></input>
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={SingleKaryawan.email}
-            onChange={handleInputChange}
-          ></input>
-        </div>
-        <div>
-          <label>Lama Kerja:</label>
-          <input
-            type="number"
-            name="lamaKerja"
-            onChange={handleInputChange}
-            value={SingleKaryawan.lamaKerja}
-          ></input>
-        </div>
-        <div>
-          <label>Jenis Kelamin:</label>
-          <select
-            name="gender"
-            value={SingleKaryawan.gender}
-            onChange={handleInputChange}
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div>
-          <input type="submit" name="submit" value="Simpan"></input>
-        </div>
-      </form>
+      <button onClick={() => setSingleKaryawan(baru)}>Karyawan Baru</button>
+      <Form
+        _SimpanDataKaryawan={(event) => {
+          event.preventDefault();
+          setUpdateData(SingleKaryawan);
+        }}
+        SingleKaryawan={SingleKaryawan}
+        handleInputChange={handleInputChange}
+      ></Form>
       <ListKaryawan
-        AnakKomponent={AnakKomponent}
+        AnakKomponent={
+          React.useMemo(
+            () =>
+              <AnakKomponent
+                Karyawans={Karyawans}
+                AnakKaryawan={AnakKaryawan}
+              ></AnakKomponent>,
+            [Karyawans, AnakKaryawan]
+          )}
       >
       </ListKaryawan>
 
@@ -111,4 +68,4 @@ const App = () => {
 
   );
 }
-export default App;
+export default React.memo(App);

@@ -7,4 +7,4 @@ const ListKaryawan = ({ AnakKomponent }) =>
         </ul>
     )
 
-export default ListKaryawan;
+export default React.memo(ListKaryawan);
