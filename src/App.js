@@ -4,6 +4,8 @@ import ListKaryawan from './ListKaryawan';
 import Karyawan from './Karyawan';
 import { useKaryawan, baru } from './useKaryawan'
 import Form from './Form';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 
 const AnakKomponent = ({ Karyawans, AnakKaryawan }) => (
   <React.Fragment>
@@ -34,36 +36,37 @@ const App = () => {
 
   const AnakKaryawan = React.useMemo(() => (id) => (
     <React.Fragment>
-      <button onClick={() => setDeleteID(id)}>Delete Karyawan</button>
-      <button onClick={() => setSingleID(id)}>Edit Karyawan</button>
+      <Button onClick={() => setDeleteID(id)} variant="contained" color="primary">Delete Karyawan</Button>
+      <Button onClick={() => setSingleID(id)} variant="contained" color="secondary">Edit Karyawan</Button>
     </React.Fragment>
   ), [setDeleteID, setSingleID])
 
   return (
     <div className="App">
-      <div className="header">Daftar Karyawan</div>
-      <button onClick={() => setSingleKaryawan(baru)}>Karyawan Baru</button>
-      <Form
-        _SimpanDataKaryawan={(event) => {
-          event.preventDefault();
-          setUpdateData(SingleKaryawan);
-        }}
-        SingleKaryawan={SingleKaryawan}
-        handleInputChange={handleInputChange}
-      ></Form>
-      <ListKaryawan
-        AnakKomponent={
-          React.useMemo(
-            () =>
-              <AnakKomponent
-                Karyawans={Karyawans}
-                AnakKaryawan={AnakKaryawan}
-              ></AnakKomponent>,
-            [Karyawans, AnakKaryawan]
-          )}
-      >
-      </ListKaryawan>
-
+      <Container maxWidth="lg">
+        <div className="header">Daftar Karyawan</div>
+        <Button onClick={() => setSingleKaryawan(baru)} variant="contained">Karyawan Baru</Button>
+        <Form
+          _SimpanDataKaryawan={(event) => {
+            event.preventDefault();
+            setUpdateData(SingleKaryawan);
+          }}
+          SingleKaryawan={SingleKaryawan}
+          handleInputChange={handleInputChange}
+        ></Form>
+        <ListKaryawan
+          AnakKomponent={
+            React.useMemo(
+              () =>
+                <AnakKomponent
+                  Karyawans={Karyawans}
+                  AnakKaryawan={AnakKaryawan}
+                ></AnakKomponent>,
+              [Karyawans, AnakKaryawan]
+            )}
+        >
+        </ListKaryawan>
+      </Container>
     </div>
 
   );

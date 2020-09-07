@@ -1,10 +1,11 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 
 const ListKaryawan = ({ AnakKomponent }) =>
     (
-        <ul>
+        <Grid container>
             {AnakKomponent}
-        </ul>
+        </Grid>
     )
 
 export default React.memo(ListKaryawan);
