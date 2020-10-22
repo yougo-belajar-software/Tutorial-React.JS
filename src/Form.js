@@ -1,29 +1,47 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
 
 const Form = ({ _SimpanDataKaryawan, SingleKaryawan, handleInputChange }) => (
     <form onSubmit={_SimpanDataKaryawan}>
-        <TextField type="text"
-            name="nama"
-            label="Nama"
-            value={SingleKaryawan.nama}
-            onChange={handleInputChange}
-        ></TextField>
-        <TextField
-            type="email"
-            name="email"
-            label="email"
-            value={SingleKaryawan.email}
-            onChange={handleInputChange}
-        ></TextField>
-        <TextField
-            type="number"
-            name="lamaKerja"
-            label="Lama Kerja"
-            onChange={handleInputChange}
-            value={SingleKaryawan.lamaKerja}
-        ></TextField>
-        <input type="submit" name="submit" value="Simpan"></input>
+        <div>
+            <label>Nama : </label>
+            <input type="text"
+                name="nama"
+                value={SingleKaryawan.nama}
+                onChange={handleInputChange}
+            ></input>
+        </div>
+        <div>
+            <label>Email:</label>
+            <input
+                type="email"
+                name="email"
+                value={SingleKaryawan.email}
+                onChange={handleInputChange}
+            ></input>
+        </div>
+        <div>
+            <label>Lama Kerja:</label>
+            <input
+                type="number"
+                name="lamaKerja"
+                onChange={handleInputChange}
+                value={SingleKaryawan.lamaKerja}
+            ></input>
+        </div>
+        <div>
+            <label>Jenis Kelamin:</label>
+            <select
+                name="gender"
+                value={SingleKaryawan.gender}
+                onChange={handleInputChange}
+            >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div>
+            <input type="submit" name="submit" value="Simpan"></input>
+        </div>
     </form>
 )
 
