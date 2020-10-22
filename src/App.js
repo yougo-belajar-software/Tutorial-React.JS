@@ -3,7 +3,7 @@ import './App.css';
 import ListKaryawan from './ListKaryawan';
 import Karyawan from './Karyawan';
 import { useKaryawan } from './useKaryawan'
-import { Typography, Container } from '@material-ui/core/';
+import { Container } from '@material-ui/core/';
 import ParticlesBg from 'particles-bg'
 
 const AnakKomponent = ({ Karyawans }) => (
