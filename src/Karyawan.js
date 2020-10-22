@@ -1,13 +1,8 @@
 import React from 'react';
-import Male from './logo/male-solid.svg';
-import Female from './logo/female-solid.svg';
 import Company from './images/company.jfif';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import { CardContent, CardMedia,  ListItemText, Grid, Card, ListItem, List, ListItemIcon } from '@material-ui/core';
+import { ArrowRight } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
 const myStyle = makeStyles({
     card: {
         margin: 20,
@@ -17,7 +12,7 @@ const myStyle = makeStyles({
         height: 140,
     },
 })
-const Karyawan = ({ karyawan, AnakKaryawan, style }) => {
+const Karyawan = ({ karyawan, AnakKaryawan }) => {
     const classes = myStyle();
     return (
         <Grid item lg={4} md={6} sm={12} xs={12}>
@@ -28,19 +23,27 @@ const Karyawan = ({ karyawan, AnakKaryawan, style }) => {
                 >
                 </CardMedia>
                 <CardContent>
-                    <div>Nama : {karyawan.nama}</div>
-                    <div>Email: {karyawan.email}</div>
-                    <div>lamaKerja : {karyawan.lamaKerja}</div>
-                    <div>Jenis Kelamin : {karyawan.gender}</div>
-                    <div>
-                        <img src={(karyawan.gender === "male" ? Male : Female)} width='20px' alt={karyawan.nama} />
-                    </div>
-                    <div>
-                        {AnakKaryawan}
-                    </div>
+                    <List >
+                        <ListItem>
+                            <ListItemIcon><ArrowRight /></ListItemIcon>
+                            <ListItemText secondary={karyawan.name} primary="Name : " />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><ArrowRight /></ListItemIcon>
+                            <ListItemText secondary={karyawan.phone} primary="Phone Number : " />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><ArrowRight /></ListItemIcon>
+                            <ListItemText secondary={karyawan.email} primary="Email : "/>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon><ArrowRight /></ListItemIcon>
+                            <ListItemText secondary={karyawan.username} primary="Username : "/>
+                        </ListItem>
+                    </List>
                 </CardContent>
             </Card>
-        </Grid>
+        </Grid >
     )
 }
 

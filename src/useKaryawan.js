@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 //url untuk dipakai berulang kali
-const MainURL = "http://localhost:8000/karyawan"
+const MainURL = process.env.REACT_APP_API_URL;
 
 //data untuk reset state (karyawan baru)
 export const baru = {
@@ -37,15 +37,15 @@ export const useKaryawan = () => {
     useEffect(() => {
         const url = MainURL;
         Axios.get(url).then(
-            response => setKaryawans(response.data.results)
+            response => setKaryawans(response.data)
         )
     }, [Counter])
     const reset = () => {
-        setCounter(c => c + 1);
-        setSingleID(null);
-        setSingleKaryawan(baru);
-    }
-    //Trigger Update & Baru simpan ke Backend
+            setCounter(c => c + 1);
+            setSingleID(null);
+            setSingleKaryawan(baru);
+        }
+        //Trigger Update & Baru simpan ke Backend
     useEffect(() => {
         if (UpdateData !== null) {
             const data = UpdateData;
